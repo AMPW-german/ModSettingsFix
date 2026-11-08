@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="..\tooling\msbuild\KsaMod.props" />
+
+	<PropertyGroup>
+		<ModName>ModSettingsFix</ModName>
+		<VersionPrefix>0.1.0</VersionPrefix>
+		<AssemblyVersion>0.1.0.0</AssemblyVersion>
+
+		<Company>AMPW-german</Company>
+		<Authors>AMPW-german</Authors>
+		<Description>Fixes the mod setting status when disabled mods are present</Description>
+		<Copyright>MIT</Copyright>
+	</PropertyGroup>
+
+	<Import Project="..\tooling\msbuild\KsaMod.targets" />
+</Project>

@@ -4,13 +4,27 @@ using KSA;
 namespace ModSettingsFix;
 
 [HarmonyPatch]
-public static class HelloWorldPatch
+public static class ModSettingsFixPatch
 {
-	// CheckOnLaunch runs once per game launch, after mods are loaded.
-	[HarmonyPatch(typeof(VersionInfo), nameof(VersionInfo.CheckOnLaunch))]
-	[HarmonyPrefix]
-	public static void CheckOnLaunchPrefix()
-	{
-		Console.WriteLine("Hello world from ModSettingsFix!");
-	}
+    [HarmonyPatch(typeof(ModLibrary), nameof(ModLibrary.PrepareAll))]
+    [HarmonyPostfix]
+    public static void AfterPrepareAll()
+    {
+        try
+        {
+            var mods = ModLibrary.Manifest?.Mods;
+            if (mods is not null)
+            {
+                for (var index = 0; index < mods.Count; index++)
+                {
+                    mods[index].Index = index;
+                    Console.WriteLine($"Mod {mods[index].Id} index set to {index}");
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"ModSettingsFix: failed to normalize mod indices: {exception}");
+        }
+    }
 }
